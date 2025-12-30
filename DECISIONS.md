@@ -16,6 +16,15 @@ I used **Tailwind CSS v4** as it was pre-configured.
 - **Typography**: Paired `Merriweather` (headers) with `Inter` (body) for a classic high-end publication feel.
 - **Sidebar**: Implemented a sticky sidebar with an Intersection Observer in the client-side `Sidebar` component to highlight active sections, simulating a real reading app experience.
 
-## 4. Tradeoffs
-- **Images**: I did not implement image rendering within the article body as DummyJSON posts are text-only. In a real app, I would parse image markdown or use a structured content block system (like Portable Text).
+## 4. Image Handling
+To enhance the visual appeal without a real CMS with image assets:
+- **Simulated Images**: I used `picsum.photos` seeded with the post ID (`/seed/${post.id}`) to generate consistent, deterministic high-quality images for each entry.
+- **External Configuration**: Configured `next.config.ts` to allow the `picsum.photos` domain for `next/image` optimization.
+
+## 5. Hydration & Extensions
+- **Hydration Mismatch**: Encountered simulated hydration errors due to browser extensions injecting attributes (e.g., `cz-shortcut-listen`).
+- **Resolution**: Applied `suppressHydrationWarning={true}` to the `<body>` tag in `app/layout.tsx`. This is a recommended pattern when you cannot control client-side injections (like extensions) that don't affect the application logic.
+
+## 6. Tradeoffs
+- **Images**: I did not implement image rendering *within* the article body text itself, as DummyJSON posts are text-only. In a real app, I would parse image markdown or use a structured content block system.
 - **Testing**: Manual verification was prioritized over Unit Tests due to the time limit. `error.tsx` acts as the main fail-safe for API issues.
